@@ -182,6 +182,52 @@ namespace AuthAPI.Controllers
             }
         }
 
+        // assign http post request
+        [HttpPost]
+        public async Task<IActionResult> AssignRoleToUser(AssignRoleToUser model)
+        {
+
+            var allroles = (from roles in _context.Roles.ToList()
+                            select new SelectListItem
+                            {
+                                Value = roles.Id,
+                                Text = roles.Name
+                            }).ToList();
+
+
+            allroles.Insert(0, (new SelectListItem()
+            {
+                Text = "Select",
+                Value = "",
+                Selected = true
+            }));
+            model.ListRole = allroles;
+
+            if (ModelState.IsValid)
+            {
+                var getuserName = await _userManager.FindByNameAsync(model.Username);
+                
+                var getrole = await _roleManager.FindByIdAsync(model.RoleId);
+                if (getrole != null)
+                {
+                    var isAdmin = await _userManager.IsInRoleAsync(getuserName, getrole.Name);
+
+                    if (isAdmin == false)
+                    {
+                        await _userManager.AddToRoleAsync(getuserName, getrole.Name);
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Role Is Already Assign to User");
+                        return View(model);
+                    }
+
+                }
+                return View(model);
+            }
+            return View(model);
+        }
+
 
         //[HttpGet]
         //public async Task<IActionResult> EditRole(string id , EditRole modelRole)
