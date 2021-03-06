@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json.Serialization;
 
 namespace AuthAPI
 {
@@ -32,7 +33,8 @@ namespace AuthAPI
                 .AddRoles<IdentityRole>()
                                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
             services.AddRazorPages(options =>
             {
 

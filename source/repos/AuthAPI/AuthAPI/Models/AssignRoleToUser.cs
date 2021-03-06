@@ -11,10 +11,10 @@ namespace AuthAPI.Models
         [Required(ErrorMessage = "Choose Role")]
         public string RoleId { get; set; }
         public List<SelectListItem> ListRole { get; set; }
-        [DisplayName("User")]
-        [Required(ErrorMessage = "Choose Username")]
+       
+        [Required(ErrorMessage = "Choose UserId")]
         public string UserId { get; set; }
-        [Required(ErrorMessage = "Choose Username")]
-        public string Username { get; set; }
+        //[Required(ErrorMessage = "Choose Username")]
+        //public string Username { get; set; }
     }
 }

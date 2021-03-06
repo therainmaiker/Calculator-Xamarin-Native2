@@ -206,3 +206,6 @@ C:\Users\Youcode\source\repos\AuthAPI\AuthAPI\obj\Debug\netcoreapp3.1\Razor\View
 C:\Users\Youcode\source\repos\AuthAPI\AuthAPI\obj\Debug\netcoreapp3.1\Razor\Views\Administration\ListOfRoles.cshtml.g.cs
 C:\Users\Youcode\source\repos\AuthAPI\AuthAPI\obj\Debug\netcoreapp3.1\Razor\Views\Administration\EditRole.cshtml.g.cs
 C:\Users\Youcode\source\repos\AuthAPI\AuthAPI\obj\Debug\netcoreapp3.1\Razor\Views\Administration\AssignRoleToUser.cshtml.g.cs
+C:\Users\Youcode\source\repos\AuthAPI\AuthAPI\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\Youcode\source\repos\AuthAPI\AuthAPI\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\Youcode\source\repos\AuthAPI\AuthAPI\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll

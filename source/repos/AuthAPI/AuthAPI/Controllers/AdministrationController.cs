@@ -98,8 +98,8 @@ namespace AuthAPI.Controllers
             foreach (var user in _userManager.Users)
             {
                 // If the user is in this role, add the username to
-                // Users property of EditRoleViewModel. This model
-                // object is then passed to the view for display
+                
+                // object is  passed to the view for display
                 if (await _userManager.IsInRoleAsync(user, role.Name))
                 {
                     model.Users.Add(user.UserName);
@@ -132,8 +132,7 @@ namespace AuthAPI.Controllers
             
         }
 
-        // assign role to user get users list and role list
-        
+
         [HttpGet]
         public IActionResult AssignRoleToUser()
         {
@@ -158,8 +157,7 @@ namespace AuthAPI.Controllers
             return View(model);
         }
 
-
-        ///  getting lists
+        // assign role to user get users list and role list
 
         public ActionResult GetAllUsers(string username)
         {
@@ -182,7 +180,9 @@ namespace AuthAPI.Controllers
             }
         }
 
-        // assign http post request
+
+
+
         [HttpPost]
         public async Task<IActionResult> AssignRoleToUser(AssignRoleToUser model)
         {
@@ -205,28 +205,115 @@ namespace AuthAPI.Controllers
 
             if (ModelState.IsValid)
             {
-                var getuserName = await _userManager.FindByNameAsync(model.Username);
+                var getuserId = await _userManager.FindByIdAsync(model.UserId);
                 
                 var getrole = await _roleManager.FindByIdAsync(model.RoleId);
                 if (getrole != null)
                 {
-                    var isAdmin = await _userManager.IsInRoleAsync(getuserName, getrole.Name);
+                   
+                       IdentityResult result = await _userManager.AddToRoleAsync(getuserId,getrole.Name);
 
-                    if (isAdmin == false)
-                    {
-                        await _userManager.AddToRoleAsync(getuserName, getrole.Name);
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("", "Role Is Already Assign to User");
-                        return View(model);
-                    }
+                        if (result.Succeeded)
+                        {
+                            return RedirectToAction("ListOfRoles");
+                        }
+                    
 
                 }
                 return View(model);
             }
+            
+            
             return View(model);
         }
+
+        //[HttpGet]
+        //public IActionResult AssignRoleToUser()
+        //{
+        //    var model = new AssignRoleToUser();
+
+        //    var allroles = (from roles in _context.Roles.ToList()
+        //                    select new SelectListItem
+        //                    {
+        //                        Value = roles.Id,
+        //                        Text = roles.Name
+        //                    }).ToList();
+
+
+        //    allroles.Insert(0, (new SelectListItem()
+        //    {
+        //        Text = "Select",
+        //        Value = "",
+        //        Selected = true
+        //    }));
+
+        //    model.ListRole = allroles;
+        //    return View(model);
+        //}
+
+
+        ///  getting lists of Users in specific role
+        //[HttpGet]
+        //public ActionResult GetAllUsers(string username)
+        //{
+        //    try
+        //    {
+        //        var allUsers = (from user in _context.Users.ToList()
+        //                        where user.UserName.Contains(username)
+        //                        select new SelectListItem
+        //                        {
+        //                            Value = user.Id,
+        //                            Text = user.UserName
+        //                        }).ToList();
+
+        //        return Json(allUsers);
+
+
+
+
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw;
+        //    }
+        //}
+
+        // assign http post request
+        //[HttpPost]
+        //public async Task<IActionResult> AssignRoleToUser(AssignRoleToUser model)
+        //{
+
+        //    var allroles = (from roles in _context.Roles.ToList()
+        //                    select new SelectListItem
+        //                    {
+        //                        Value = roles.Id,
+        //                        Text = roles.Name
+        //                    }).ToList();
+
+
+        //    allroles.Insert(0, (new SelectListItem()
+        //    {
+        //        Text = "Select",
+        //        Value = "",
+        //        Selected = true
+        //    }));
+        //    model.ListRole = allroles;
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        var getuserName = await _userManager.FindByNameAsync(model.UserId);
+
+        //        var getrole = await _roleManager.FindByIdAsync(model.RoleId);
+
+
+        //                await _userManager.AddToRoleAsync(getuserName, getrole.Name);
+
+
+
+
+        //    }
+        //    return View(model);
+        //}
 
 
         //[HttpGet]
