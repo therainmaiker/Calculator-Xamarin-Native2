@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Reservation_V4.Models.ReservationType>
+
+<p class="text-center pt-5" >
+    <a class="btn btn-warning align-self-center" asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead class="table-success">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ReservationName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AccessNumber)
+            </th>
+            <th>
+                Actions
+
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr class="table-dark">
+            <td>
+                @Html.DisplayFor(modelItem => item.ReservationName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccessNumber)
+            </td>
+            <td>
+                <a type="button" class="btn btn-outline-info m-1" asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
+
+            <a type="button" class="btn btn-outline-danger m-1" asp-action="Delete" asp-route-id="@item.Id">delete</a> 
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

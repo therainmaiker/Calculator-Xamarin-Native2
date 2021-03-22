@@ -1,0 +1,99 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model IEnumerable<Reservation_V4.Models.Reservation>
+
+@{
+    var role = new IdentityRole();
+
+
+
+}
+
+<p  class="text-center pt-5" >
+    <a class="btn btn-warning align-self-center" asp-action="Create">Submit Reservation</a>
+</p>
+<table class="table">
+    <thead  class="table-success">
+    <tr>
+     
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+
+     
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cause)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReservationType)
+        </th>
+       
+        <th>
+            
+            Actions
+
+        </th>
+    </tr>
+    </thead>
+
+    <tbody>
+@foreach (var item in Model) {
+        <tr class="table-dark">
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cause)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReservationType.ReservationName)
+            </td>
+           
+            <td>
+                
+               
+
+                @if (User.IsInRole("Admin"))
+                {
+            <form asp-controller="Reservation" asp-action="StatusChanger">
+
+                <input type="text" value="@item.Id" name="Id" />
+                <input type="text" value="true" name="Status" />
+
+                <button type="submit" class="btn btn-outline-success m-1">Approve</button>
+
+
+            </form>
+
+            <form asp-controller="Reservation" asp-action="StatusChanger">
+
+                <input type="text" value="@item.Id" name="Id" />
+                <input type="text" value="false" name="Status" />
+
+                <button type="submit" class="btn btn-outline-danger m-1">Reject</button>
+
+
+            </form>
+
+
+
+                }
+
+
+
+                <a asp-action="Edit" class="btn btn-outline-info m-1" asp-route-id="@item.Id">Edit</a>
+
+
+
+
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
